@@ -23,11 +23,10 @@ from egegl.models import (
     GeneticOperatorHandler,
 )
 from egegl.models.apprentice import LSTMGenerator, TransformerGenerator
+from egegl.models.handlers.transformer_handler import TransformerGeneratorHandler
 from egegl.utils.featurizer import CanonicalFeaturizer
 from egegl.utils.sampling_handler import SamplingHandler
 from egegl.utils.smiles import calculate_similarity, canonicalize_and_score_smiles
-
-
 class Trainer:
     def __init__(
         self,
@@ -145,7 +144,7 @@ class Trainer:
         with torch.no_grad():
             self.apprentice_handler.model.eval()
             context_smiles = None
-            if isinstance(self.apprentice_handler, TransformerGenerator):
+            if isinstance(self.apprentice_handler, TransformerGeneratorHandler):
                 context_smiles = self._get_all_smiles_from_memory()
 
             smiles, _, _, _ = self.apprentice_handler.sample(
@@ -228,6 +227,12 @@ class Trainer:
 
         for _ in range(self.apprentice_training_steps):
             smiles = random.choices(all_smiles, k=self.apprentice_training_batch_size)
+            smiles_list = []
+            for smi in smiles:
+                mol = Chem.MolFromSmiles(smi)
+                if mol is not None:
+                    smiles_list.append(Chem.MolToSmiles(mol))
+            smiles = smiles_list            
             loss = self.apprentice_handler.train_on_batch(smiles=smiles, device=device)
             average_loss += loss / self.apprentice_training_steps
 
