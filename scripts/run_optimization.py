@@ -12,7 +12,8 @@ from torch.optim import Adam
 
 from egegl.data import SmilesCharDictionary, load_dataset
 from egegl.memory import FragmentLibrary, MaxRewardPriorityMemory, Recorder
-from egegl.runners import GeglTrainer, Generator
+from egegl.runners.trainer import Trainer as GeglTrainer
+from egegl.runners import Generator
 from egegl.scoring.benchmarks import load_benchmark
 from egegl.utils.load_funcs import (
     load_apprentice_handler,

@@ -80,7 +80,7 @@ CUDA_VISIBLE_DEVICES=0 python scripts/run_optimization.py \
 --model_type LSTM --benchmark_id 28 --use_cuda \
 --dataset zinc \
 --apprentice_load_dir ./data/pretrained_models/original_benchmarks/zinc \
---max_smiles_length 81 --num_jobs 8 --genetic_expert SMILES
+--max_smiles_length 81 --num_jobs 8 --genetic_experts SMILES
 ```
 
 
