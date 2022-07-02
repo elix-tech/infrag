@@ -107,3 +107,8 @@ celerybeat-schedule
 .mypy_cache/
 .dmypy.json
 dmypy.json
+
+# infrag
+
+/data/datasets/
+/data/pretrained_models/[a-zA-Z0-9_]*/
